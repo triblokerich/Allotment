@@ -30,7 +30,7 @@ const M='JFMAMJJASOND'.split('');let Y=[2023,2024,2025,2026];
 const $=i=>document.getElementById(i);
 const tabs=['Seasons','Value','3D plots','Update'],slug=['seasons','value','plots','update'];
 const show=i=>{tabs.forEach((_,j)=>{$('t'+j).classList.toggle('hide',j!=i);$('tabs').children[j].classList.toggle('on',j==i)});if(i==2)init3d()};
-const fromHash=()=>{const i=slug.indexOf(location.hash.slice(1));show(i<0?0:i)};
+const fromHash=()=>{const h=location.hash.slice(1),m=/^plots-(\d{4})$/.exec(h),i=m?2:slug.indexOf(h);show(i<0?0:i);if(m&&window.setYr)setYr(+m[1])};
 tabs.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>{show(i);try{location.hash=slug[i]}catch(e){}};$('tabs').append(b)});
 $('tabs').children[0].classList.add('on');$('so').onchange=()=>value();
 ['y0','y1','y2'].forEach(id=>{const s=$(id);s.innerHTML='<option value="all">All years</option>'+Y.map(y=>`<option>${y}</option>`).join('');s.onchange=()=>id=='y0'?seasons():value()});
@@ -112,7 +112,7 @@ function init3d(){if(built)return;built=true;const T=T3=THREE,cv=$('cv'),w=$('w'
  cv.onpointercancel=e=>P.delete(e.pointerId);
  cv.onwheel=e=>{e.preventDefault();di=Math.max(5,Math.min(40,di*(1+e.deltaY*.001)));draw()};
  
- const yb=$('yb');Object.keys(YR).forEach(y=>{const b=document.createElement('button');b.textContent=y;b.className=y==cur?'on':'';b.onclick=()=>{[...yb.children].forEach(c=>c.classList.toggle('on',c==b));info(null);build(+y);draw()};yb.append(b)});
+ const yb=$('yb'),setYr=window.setYr=y=>{if(!YR[y])return;[...yb.children].forEach(c=>c.classList.toggle('on',c.textContent==y));if(y==cur&&Gp.children.length)return;info(null);build(+y);draw()};Object.keys(YR).forEach(y=>{const b=document.createElement('button');b.textContent=y;b.className=y==cur?'on':'';b.onclick=()=>{try{location.hash='plots-'+y}catch(e){}setYr(+y)};yb.append(b)});
  rs();build(cur);draw()}
 const fy=()=>['y0','y1','y2'].forEach(id=>{const s=$(id),v=s.value;s.innerHTML='<option value="all">All years</option>'+Y.map(y=>`<option>${y}</option>`).join('');s.value=v=='all'||Y.includes(+v)?v:'all'});
 const K=[['red onion','redonion'],['white onion','onion'],['spring onion','springonion'],['onion','onion'],['shallot','shallot'],['cherry tomato','tomato'],['tomato','tomato'],['potato','potato'],['courgette','courgette'],['marrow','courgette'],['tromboncino','courgette'],['pumpkin','pumpkin'],['butternut','butternut'],['sweetcorn','sweetcorn'],['cucumber','cucumber'],['mangetout','mangetout'],['broccoli','broccoli'],['leek','leek'],['carrot','carrot'],['beetroot','beetroot'],['parsnip','parsnip'],['garlic chives','herbs'],['garlic','garlic'],['pepper','pepper'],['chilli','chilli'],['chili','chilli'],['strawberr','strawberry'],['broad bean','broadbean'],['rocket','rocket'],['parsley','herbs'],['rosemary','herbs'],['thyme','herbs'],['chives','herbs'],['lemon balm','herbs']];
