@@ -128,8 +128,8 @@ function init3d(){if(built)return;built=true;const T=T3=THREE,cv=$('cv'),w=$('w'
    else{const tl=id=='N2'||id=='N7'?1.5:1.1;blob(x,.55*pg*tl+.1,z,.8*pg,tl*pg,.8*pg,0x4f8a3a);dots(id,x,.55*pg*tl+.1,z,.4*pg,.45*pg*tl,.4*pg)}});
   
   
-  [[-4,-4],[18,-5],[19,12],[7,14],[-3,15],[6,-6],[16,-8]].forEach((p,i)=>{add(new T.Mesh(new T.CylinderGeometry(.15,.22,2.5,6),mat(0x5a3d25)),p[0],1.25,p[1]);blob(p[0],3.4,p[1],3.4,3,3.4,i%2?0x4c7a3a:0x5a8a3a)});
-  blob(-5,3.5,10.5,1.2,7,1.2,0x93ad4e);
+  
+  
    const dm=add(new T.Mesh(new T.CylinderGeometry(1,1,2.9,20,1,true,0,Math.PI),new T.MeshLambertMaterial({color:0xf4f4f4,transparent:true,opacity:.55,side:T.DoubleSide,depthWrite:false})),12.35,0,1.3);dm.rotation.z=Math.PI/2;dm.scale.set(1.7,1,1);dm.raycast=()=>{};
   [[-2,-1.25],[2,-1.25],[-2,1.25],[2,1.25],[0,-1.25],[0,1.25]].forEach(p=>box(.09,2,.09,4.3+p[0],1,2.15+p[1],0x4a3a2a));box(4.1,.02,2.6,4.3,2.0,2.15,0x222222,.3).raycast=()=>{};
   [2.1,5.2].forEach(zz=>{box(.08,.08,2.6,.7,2.05,zz,0xb08a55);[-1.2,1.2].forEach(o=>box(.9,.06,.06,.7,2.05,zz+o,0xb08a55))});
